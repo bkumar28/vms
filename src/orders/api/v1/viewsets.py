@@ -17,16 +17,7 @@ class PurchaseOrderListView(generics.ListCreateAPIView):
     queryset = PurchaseOrder.objects.all()
     serializer_class = PurchaseOrderSerializer
     filter_backends = [filters.SearchFilter]
-    search_fields = ["vendor_code"]  # Filter by vendor code
-
-    def get_queryset(self):
-        queryset = super().get_queryset()
-        # Optionally, system can further filter based on other query parameters
-        # For example, filter Purchase Order by  vendor code
-        vendor_code = self.request.query_params.get("vendor_code", None)
-        if vendor_code is not None:
-            queryset = queryset.filter(vendor__vendor_code=vendor_code)
-        return queryset
+    search_fields = ["vendor__vendor_code"]  # Filter by vendor code
 
 
 class PurchaseOrderActionView(generics.RetrieveUpdateDestroyAPIView):

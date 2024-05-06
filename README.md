@@ -2,7 +2,7 @@
 
 #### Clone the Project Repository
 ```
- $ git clone https://github.com/bkumar28/vms.git
+  git clone https://github.com/bkumar28/vms.git
 ```
  
 #### Python Version Requirement
@@ -10,42 +10,42 @@
 
 #### Create a Virtual Environment
 ```
-$ virtualenv venv -p python3
+ virtualenv venv -p python3
 ```
 
 #### Activate the Virtual Environment
 
 ```
-$ source venv/bin/activate
+ source venv/bin/activate
 ```
 #### Navigate to the Project Directory (vms)
 
 ```
-$ cd vms/
+ cd vms/
 ```
 
 #### Install Dependencies
 
 ```
-$ pip3 install -r requirements.txt
+ pip3 install -r requirements.txt
 ```
 
 #### Navigate to the SRC Directory (src)
 
 ```
-$ cd src/
+ cd src/
 ```
 
 #### Run Migration Command
 
 ```
-$ python manage.py migrate
+ python manage.py migrate
 ```
 
 #### Create a Super Admin User
 
 ```
-$  python manage.py createsuperuser
+  python manage.py createsuperuser
 >>>  username : super_admin
 >>>  email_address : kumar.bhart28@gmail.com
 >>>  password : admin@1234
@@ -66,7 +66,7 @@ coverage report
 
 #### Run the Django Server
 ```
-$ python3 manage.py runserver
+ python3 manage.py runserver
 ```
 
 ## Accessing API Documentation
