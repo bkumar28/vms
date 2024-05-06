@@ -1,3 +1,5 @@
+from copy import deepcopy
+
 from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth.models import User
@@ -19,10 +21,14 @@ class PurchaseOrderListViewTestCase(TestCase):
             username="testuser", password="testpassword"
         )
         self.client.force_authenticate(user=self.user)
+
+        self.vendor_code = "VEN-pc0e8ktp"
+
         self.vendor = VendorFactory(
             name="Test Vendor",
             contact_details="Test Contact Details",
             address="Test Address",
+            vendor_code=self.vendor_code,
         )
 
         self.url = reverse("orders:purchase-order-list")
@@ -48,6 +54,12 @@ class PurchaseOrderListViewTestCase(TestCase):
             "quality_rating": 9.5,
         }
 
+        po_sample_data = deepcopy(self.data)
+        po_sample_data['vendor'] = self.vendor
+
+        # create purchase order
+        self.po1 = PurchaseOrderFactory(**po_sample_data)
+
     def test_list_purchase_orders(self):
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -55,6 +67,15 @@ class PurchaseOrderListViewTestCase(TestCase):
     def test_create_purchase_order(self):
         response = self.client.post(self.url, self.data, format="json")
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_filter_purchase_orders_by_vendor_code(self):
+        # Filter purchase orders by vendor code
+        response = self.client.get(self.url + f"?search={self.vendor_code}")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        # Expecting only one purchase order with vendor code 'VEN-pc0e8ktp'
+        self.assertEqual(len(response.data["results"]), 1)
+        self.assertEqual(response.data["results"][0]['id'], self.po1.id)
 
 
 class PurchaseOrderActionViewTestCase(TestCase):
