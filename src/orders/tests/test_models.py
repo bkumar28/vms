@@ -5,6 +5,8 @@ from orders.tests.factories import PurchaseOrderFactory
 from vendors.tests.factories import VendorFactory
 from orders.tests.mock_data.order import LIST_PO_DATA
 
+from orders.models import PurchaseOrder
+
 
 class PurchaseOrderTestCase(TestCase):
     def setUp(self):
@@ -98,3 +100,7 @@ class PurchaseOrderTestCase(TestCase):
         self.assertEqual(self.po5.calc_avg_response_time(), 36)
 
         self.assertEqual(self.po6.calc_avg_response_time(), 36)
+
+    def test_change_status(self):
+        self.po3.status = PurchaseOrder.COMPLETED
+        self.po3.save()

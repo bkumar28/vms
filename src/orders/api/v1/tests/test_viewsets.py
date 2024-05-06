@@ -55,7 +55,7 @@ class PurchaseOrderListViewTestCase(TestCase):
         }
 
         po_sample_data = deepcopy(self.data)
-        po_sample_data['vendor'] = self.vendor
+        po_sample_data["vendor"] = self.vendor
 
         # create purchase order
         self.po1 = PurchaseOrderFactory(**po_sample_data)
@@ -75,7 +75,7 @@ class PurchaseOrderListViewTestCase(TestCase):
 
         # Expecting only one purchase order with vendor code 'VEN-pc0e8ktp'
         self.assertEqual(len(response.data["results"]), 1)
-        self.assertEqual(response.data["results"][0]['id'], self.po1.id)
+        self.assertEqual(response.data["results"][0]["id"], self.po1.id)
 
 
 class PurchaseOrderActionViewTestCase(TestCase):

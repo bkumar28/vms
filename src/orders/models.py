@@ -39,6 +39,11 @@ class PurchaseOrder(HasSubModelsMixin):
     quality_rating = models.FloatField(null=True, blank=True)
     status = models.CharField(max_length=50, choices=STATUS_CHOICES, default=PENDING)
 
+    # We will utilize this class variable to systematically track the status of each purchase order
+    # within our signal implementation. Leveraging this data, we can accurately calculate
+    # performance metrics tailored to our specific needs.
+    __original_status = None
+
     class Meta:
         ordering = ["-order_date"]
         verbose_name = "Purchase Order"
