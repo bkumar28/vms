@@ -24,10 +24,13 @@ def update_performance_metrics_on_status_change(sender, instance, created, **kwa
     if not created:
         vendor_obj = instance.vendor
 
-        if instance.__original_status == instance.status:
+        if (
+            instance.__original_status is None
+            or instance.__original_status == instance.status
+        ):
             return
 
-        if instance.status == instance.COMPLETED:
+        if instance.status == PurchaseOrder.COMPLETED:
             # Update on-time delivery rate
             on_time_delivery_rate = instance.calc_on_time_delivery_rate()
 
